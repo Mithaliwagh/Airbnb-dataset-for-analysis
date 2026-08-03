@@ -4,6 +4,8 @@
 <workbook _.fcp.WorkbookFingerprinting.true...author-id='27fde761bacb8609a5bf919f98d8d82ffcf606ab417229d3662bbe122b3574ac' _.fcp.WorkbookFingerprinting.true...creator-author-id='27fde761bacb8609a5bf919f98d8d82ffcf606ab417229d3662bbe122b3574ac' _.fcp.WorkbookFingerprinting.true...creator-license-type='public' _.fcp.WorkbookFingerprinting.true...creator-machine-id='27fde761bacb8609a5bf919f98d8d82ffcf606ab417229d3662bbe122b3574ac' _.fcp.WorkbookFingerprinting.true...license-type='public' _.fcp.WorkbookFingerprinting.true...machine-id='27fde761bacb8609a5bf919f98d8d82ffcf606ab417229d3662bbe122b3574ac' original-version='18.1' source-build='2026.2.1 (20262.26.0708.1337)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
     <AnimationOnByDefault />
+    <IntuitiveSorting />
+    <IntuitiveSorting_SP2 />
     <MarkAnimation />
     <ObjectModelEncapsulateLegacy />
     <ObjectModelExtractV2 />
@@ -251,7 +253,7 @@
       <column caption='Updated_Beds' datatype='integer' name='[Calculation_0266660743684099]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='IFNULL([Beds],0)' />
       </column>
-      <column caption='Upadated_Neighbourhood1' datatype='string' name='[Calculation_0266660744040452]' role='dimension' type='nominal'>
+      <column caption='Upadated_Neighbourhood1' datatype='string' name='[Calculation_0266660744040452]' role='dimension' semantic-role='[City].[Name]' type='nominal'>
         <calculation class='tableau' formula='IFNULL([Neighbourhood ], &quot;Unknown&quot;)' />
       </column>
       <column caption='Calculation1' datatype='string' name='[Calculation_0266660744945669]' role='dimension' type='nominal'>
@@ -289,6 +291,7 @@
       <column datatype='string' name='[Room Type]' role='dimension' type='nominal' />
       <column aggregation='Sum' datatype='integer' default-format='*00000' name='[Zipcode]' role='dimension' semantic-role='[ZipCode].[Name]' type='ordinal' />
       <column caption='Airbnb_listings.csv' datatype='table' name='[__tableau_internal_object_id__].[Airbnb_listings.csv_4EC12D090143465A9C9849AAFE096403]' role='measure' type='quantitative' />
+      <column-instance column='[Room Type]' derivation='None' name='[none:Room Type:nk]' pivot='key' type='nominal' />
       <drill-paths>
         <drill-path name='Location_Structure'>
           <field>[Calculation_0266660744040452]</field>
@@ -296,7 +299,7 @@
         </drill-path>
       </drill-paths>
       <extract count='-1' enabled='true' object-id='' units='records' user-specific='false'>
-        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='C:/Users/Mithali/AppData/Local/Temp/TableauTemp/#TableauTemp_1hmhslv0rgme9b15gvd211e9x2aw.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='07/31/2026 03:14:52 PM' username='tableau_internal_user'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='Data/TableauTemp/#TableauTemp_1hmhslv0rgme9b15gvd211e9x2aw.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='07/31/2026 03:14:52 PM' username='tableau_internal_user'>
           <relation name='Extract' table='[Extract].[Extract]' type='table' />
           <metadata-records>
             <metadata-record class='column'>
@@ -489,6 +492,21 @@
         </connection>
       </extract>
       <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-hidden-fields='true' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:Room Type:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;Private room&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;Entire home/apt&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;Shared room&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;India&quot;' />
       </semantic-values>
@@ -555,27 +573,84 @@
     <worksheet name='Sheet 1'>
       <table>
         <view>
-          <datasources />
+          <datasources>
+            <datasource caption='AirBnB_NYC (airbnb)' name='federated.09pi6td1jhhe6z18ubudx1nclexh' />
+          </datasources>
+          <datasource-dependencies datasource='federated.09pi6td1jhhe6z18ubudx1nclexh'>
+            <column caption='Upadated_Neighbourhood1' datatype='string' name='[Calculation_0266660744040452]' role='dimension' semantic-role='[City].[Name]' type='nominal'>
+              <calculation class='tableau' formula='IFNULL([Neighbourhood ], &quot;Unknown&quot;)' />
+            </column>
+            <column caption='Neighbourhood' datatype='string' name='[Neighbourhood ]' role='dimension' type='nominal' />
+            <column datatype='integer' name='[Price]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Room Type]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_0266660744040452]' derivation='None' name='[none:Calculation_0266660744040452:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Room Type]' derivation='None' name='[none:Room Type:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Price]' derivation='Sum' name='[sum:Price:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <shelf-sorts>
+            <shelf-sort-v2 dimension-to-sort='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Calculation_0266660744040452:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Price:qk]' shelf='rows' />
+          </shelf-sorts>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='header'>
+            <format attr='width' field='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Calculation_0266660744040452:nk]' value='96' />
+          </style-rule>
+        </style>
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Room Type:nk]' />
+              <text column='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Room Type:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-color' value='#75a1c7' />
+                <format attr='size' value='0.85657459497451782' />
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
-        <rows />
-        <cols />
+        <rows>[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Calculation_0266660744040452:nk]</rows>
+        <cols>[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Price:qk]</cols>
       </table>
       <simple-id uuid='{29375339-9346-4004-A539-B07C84441CE5}' />
     </worksheet>
     <worksheet name='Sheet 2'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontcolor='#59a14f'>Regional Performance Review</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
-          <datasources />
+          <datasources>
+            <datasource caption='AirBnB_NYC (airbnb)' name='federated.09pi6td1jhhe6z18ubudx1nclexh' />
+          </datasources>
+          <datasource-dependencies datasource='federated.09pi6td1jhhe6z18ubudx1nclexh'>
+            <column caption='Upadated_Neighbourhood1' datatype='string' name='[Calculation_0266660744040452]' role='dimension' semantic-role='[City].[Name]' type='nominal'>
+              <calculation class='tableau' formula='IFNULL([Neighbourhood ], &quot;Unknown&quot;)' />
+            </column>
+            <column caption='Neighbourhood' datatype='string' name='[Neighbourhood ]' role='dimension' type='nominal' />
+            <column datatype='integer' name='[Number Of Reviews]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[Price]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Property Type]' role='dimension' type='nominal' />
+            <column-instance column='[Calculation_0266660744040452]' derivation='None' name='[none:Calculation_0266660744040452:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Property Type]' derivation='None' name='[none:Property Type:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Number Of Reviews]' derivation='Sum' name='[sum:Number Of Reviews:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Number of Records]' derivation='Sum' name='[sum:Number of Records:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Price]' derivation='Sum' name='[sum:Price:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
           <aggregation value='true' />
         </view>
         <style />
@@ -585,16 +660,21 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Price:qk]' />
+              <size column='[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Number Of Reviews:qk]' />
+              <lod column='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Property Type:nk]' />
+            </encodings>
           </pane>
         </panes>
-        <rows />
-        <cols />
+        <rows>[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Number of Records:qk]</rows>
+        <cols>[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Calculation_0266660744040452:nk]</cols>
       </table>
       <simple-id uuid='{2AE61A6D-2A78-48B7-9B75-39F8E2B2C119}' />
     </worksheet>
   </worksheets>
   <windows source-height='37'>
-    <window class='worksheet' maximized='true' name='Sheet 1'>
+    <window class='worksheet' name='Sheet 1'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -614,10 +694,18 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.09pi6td1jhhe6z18ubudx1nclexh].[none:Room Type:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
+      <viewpoint>
+        <zoom type='entire-view' />
+      </viewpoint>
       <simple-id uuid='{1C12F014-6455-4411-817E-A0480DA79B97}' />
     </window>
-    <window class='worksheet' name='Sheet 2'>
+    <window class='worksheet' maximized='true' name='Sheet 2'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -640,9 +728,14 @@
         <edge name='right'>
           <strip size='160'>
             <card mode='slider' param='[Parameters].[Parameter 0617129380028422]' type='parameter' />
+            <card pane-specification-id='0' param='[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Price:qk]' type='color' />
+            <card pane-specification-id='0' param='[federated.09pi6td1jhhe6z18ubudx1nclexh].[sum:Number Of Reviews:qk]' type='size' />
           </strip>
         </edge>
       </cards>
+      <viewpoint>
+        <zoom type='entire-view' />
+      </viewpoint>
       <simple-id uuid='{15EA6550-1E16-4720-8391-596138A6D71B}' />
     </window>
   </windows>
